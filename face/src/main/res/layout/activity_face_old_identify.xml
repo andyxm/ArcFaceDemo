@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <ImageView
+            android:id="@+id/ExtractImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+        <com.guo.android_extend.widget.CameraSurfaceView
+            android:id="@+id/mSurfaceView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/PairMatchingData"
+        android:layout_below="@+id/line1"
+        android:layout_marginTop="10dp">
+
+        <com.guo.android_extend.widget.CameraGLSurfaceView
+            android:id="@+id/mGLSurfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名:demo分数:0.0"
+            android:textSize="30sp" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/PairMatchingData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/close_face"
+        android:padding="20dp"
+        android:text="对    比"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/close_face"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:padding="20dp"
+        android:text="关     闭"
+        android:textSize="30sp" />
+</RelativeLayout>
