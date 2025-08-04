@@ -5,7 +5,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 30
+        minSdk 28
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -42,7 +42,7 @@ dependencies {
     implementation files('libs/ageestimation.jar')
     implementation files('libs/genderestimation.jar')
     implementation 'com.guo.android_extend:android-extend:1.0.5'
-    implementation 'com.blankj:utilcode:1.30.7'
+    api 'com.blankj:utilcode:1.30.7'
 }
 
 java {
