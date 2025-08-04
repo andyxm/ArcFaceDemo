@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 android {
     compileSdk 31
@@ -42,5 +42,5 @@ dependencies {
     implementation files('libs/ageestimation.jar')
     implementation files('libs/genderestimation.jar')
     implementation 'com.guo.android_extend:android-extend:1.0.5'
-    implementation 'com.blankj:utilcode:1.31.1' // 最新版本以官方为准
+    implementation 'com.blankj:utilcode:1.30.7'
 }

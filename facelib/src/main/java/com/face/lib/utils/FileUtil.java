@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
-import com.blankj.utilcode.utils.FileUtils;
+
+import com.blankj.utilcode.util.FileUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;

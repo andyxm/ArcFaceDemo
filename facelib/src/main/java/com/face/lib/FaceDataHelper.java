@@ -7,9 +7,9 @@ import com.arcsoft.facerecognition.AFR_FSDKEngine;
 import com.arcsoft.facerecognition.AFR_FSDKError;
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
-import com.blankj.utilcode.utils.ConvertUtils;
-import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.LogUtils;
+import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -108,7 +108,7 @@ public abstract class FaceDataHelper<T extends BaseFaceMode> {
             //save new feature
             String filePath = DBPath + "/" + model.getFaceCard() + ".data";
             if (FileUtils.isFile(filePath)) {
-                FileUtils.deleteFile(filePath);
+                FileUtils.delete(filePath);
             }
             FileOutputStream fs = new FileOutputStream(filePath, true);
             BufferedOutputStream bos=new BufferedOutputStream(fs);

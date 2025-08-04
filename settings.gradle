@@ -2,10 +2,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
-        mavenCentral()
+        jcenter()
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://jitpack.io" }
+        gradlePluginPortal()
     }
 }
 rootProject.name = "ArcFaceDemo"
