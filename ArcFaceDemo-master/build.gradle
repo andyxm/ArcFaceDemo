@@ -1,14 +1,14 @@
-apply plugin: 'com.android.application'
-
+plugins {
+    id 'com.android.application'
+}
 android {
-    compileSdkVersion 24
-    buildToolsVersion '27.0.3'
+    compileSdk 31
     defaultConfig {
         applicationId "com.arcsoft.sdk_demo"
-        minSdkVersion 19
-        targetSdkVersion 24
+        minSdk 30
+        targetSdk 31
         versionCode 1
-        versionName "1.1"
+        versionName "1.0.0"
         sourceSets.main {
             jniLibs.srcDirs = ['libs']
         }

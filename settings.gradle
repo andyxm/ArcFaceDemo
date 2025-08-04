@@ -1,1 +1,14 @@
-include ':ArcFaceDemo-master', ':face', ':facelib'
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://jitpack.io" }
+    }
+}
+rootProject.name = "ArcFaceDemo"
+include ':ArcFaceDemo-master'
+include ':face'
+include ':facelib'
