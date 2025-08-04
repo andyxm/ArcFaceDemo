@@ -44,3 +44,9 @@ dependencies {
     implementation 'com.guo.android_extend:android-extend:1.0.5'
     implementation 'com.blankj:utilcode:1.30.7'
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}

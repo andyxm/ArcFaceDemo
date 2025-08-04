@@ -5,7 +5,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
@@ -16,10 +15,9 @@ import com.FaceHelper;
 import com.MyApplication;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.utils.ConvertUtils;
-import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.LogUtils;
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.face.lib.FaceCameraGLSurfaceView;
 import com.face.lib.utils.FileUtil;
 import com.google.gson.Gson;
@@ -43,6 +41,8 @@ import butterknife.ButterKnife;
 import static com.face.lib.BaseFRAbsLoop.FAIL;
 import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
 import static com.face.lib.BaseFRAbsLoop.SUCCESS;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 @Route(path = Constance.ACTIVITY_URL_DETECTER)
 public class DetecterActivity extends AppCompatActivity implements FaceCameraGLSurfaceView.GLSurfaceViewListener {
