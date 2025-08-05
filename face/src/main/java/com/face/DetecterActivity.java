@@ -1,5 +1,9 @@
 package com.face;
 
+import static com.face.lib.BaseFRAbsLoop.FAIL;
+import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
+import static com.face.lib.BaseFRAbsLoop.SUCCESS;
+
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -8,7 +12,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.Constance;
 import com.FaceFRAbsLoop;
@@ -19,10 +24,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.face.databinding.ActivityDetecterBinding;
 import com.face.lib.FaceCameraGLSurfaceView;
 import com.face.lib.utils.FileUtil;
 import com.google.gson.Gson;
-import com.guo.android_extend.widget.CameraSurfaceView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -36,39 +41,25 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static com.face.lib.BaseFRAbsLoop.FAIL;
-import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
-import static com.face.lib.BaseFRAbsLoop.SUCCESS;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 @Route(path = Constance.ACTIVITY_URL_DETECTER)
 public class DetecterActivity extends AppCompatActivity implements FaceCameraGLSurfaceView.GLSurfaceViewListener {
     private static final String TAG = "DetecterActivity";
-    @BindView(R.id.score)
-    TextView scoreTV;
-    @BindView(R.id.mSurfaceView)
-    CameraSurfaceView mSurfaceView;
-    @BindView(R.id.mGLSurfaceView)
-    FaceCameraGLSurfaceView mGLSurfaceView;
     private FaceFRAbsLoop loop;
     private List<StudentModel> students = new ArrayList<>();
     private static final int DATA_ERROR=999;
     private static final int RIGIST_SUCCESS = 1000;
+    private ActivityDetecterBinding binding;
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCCESS:
                     StudentModel model = (StudentModel) msg.obj;
-                    mGLSurfaceView.onDestroy();
+                    binding.mGLSurfaceView.onDestroy();
                     uploadFace(model);
                     break;
                 case FAIL:
-                    scoreTV.setText("");
+                    binding.score.setText("");
                     showLongToast("识别失败");
                     countdown--;
                     if(countdown==0){
@@ -171,8 +162,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detecter);
-        ButterKnife.bind(this);
+        binding = ActivityDetecterBinding.inflate(getLayoutInflater());
         initSurfaceView();
         ARouter.getInstance().inject(this);
         EventBus.getDefault().register(this);
@@ -205,7 +195,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
             return;
         }
         loop = new FaceFRAbsLoop(mHandler, students, mWidth, mHeight, FaceHelper.appid, FaceHelper.ft_key, FaceHelper.fr_key);
-        mGLSurfaceView.setFRAbsLoop(loop);
+        binding.mGLSurfaceView.setFRAbsLoop(loop);
         loop.start();
     }
 
@@ -220,7 +210,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
         mHeight = 720;
         int mCameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
         int mFormat = ImageFormat.NV21;
-        mGLSurfaceView.initViewEngine(mSurfaceView, mCameraID, mWidth, mHeight, mFormat, FaceHelper.appid, FaceHelper.ft_key, this);
+        binding.mGLSurfaceView.initViewEngine(binding.mSurfaceView, mCameraID, mWidth, mHeight, mFormat, FaceHelper.appid, FaceHelper.ft_key, this);
     }
 
     @Override
@@ -228,7 +218,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         mHandler.removeCallbacks(mRunnable);
-        mGLSurfaceView.onDestroy();
+        binding.mGLSurfaceView.onDestroy();
     }
 
     @Override

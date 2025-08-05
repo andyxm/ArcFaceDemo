@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements CameraUtlis.CamOp
     private Thread thread;
     CameraSurfaceView mSurfaceView;
     CameraGLSurfaceView mGLSurfaceView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

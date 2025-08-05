@@ -34,6 +34,13 @@ android {
         //Lib中引用了implementation 'com.jph.takephoto:takephoto_library:4.0.3'后导致More than one file was found with OS independent path 'META-INF/rxjava.properties'
         exclude 'META-INF/rxjava.properties'
     }
+
+    viewBinding {
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -50,7 +57,7 @@ dependencies {
     implementation 'com.lzy.net:okserver:2.0.5'
     //路由器
     implementation "com.alibaba:arouter-api:1.5.2"
-    annotationProcessor "com.alibaba:arouter-implementationr:1.5.2"
+    annotationProcessor "com.alibaba:arouter-compiler:1.5.2"
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.guo.android_extend:android-extend:1.0.5'
