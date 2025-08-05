@@ -1,35 +1,36 @@
 package com.face;
-import android.content.Intent;
+
+import static com.face.lib.BaseFRAbsLoop.FAIL;
+import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
+import static com.face.lib.BaseFRAbsLoop.SUCCESS;
+
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.FaceFRAbsLoop;
 import com.FaceHelper;
 import com.MyApplication;
-import com.blankj.utilcode.utils.LogUtils;
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.face.lib.FaceCameraGLSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView;
 import com.model.StudentModel;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.face.lib.BaseFRAbsLoop.FAIL;
-import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
-import static com.face.lib.BaseFRAbsLoop.SUCCESS;
 
 public class FaceIdentifyExtActivity extends AppCompatActivity implements FaceCameraGLSurfaceView.GLSurfaceViewListener {
     private static final String TAG = "FaceIdentifyExtActivity";
@@ -45,18 +46,18 @@ public class FaceIdentifyExtActivity extends AppCompatActivity implements FaceCa
     FaceCameraGLSurfaceView mGLSurfaceView;
     @BindView(R.id.close_face)
     Button closeFace;
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCCESS:
                     StudentModel model = (StudentModel) msg.obj;
-                    ToastUtils.showLongToast("识别成功");
+                    ToastUtils.showLong("识别成功");
                     scoreTV.setText("卡号:" + model.getFaceCard() + "分数:" + model.getScore());
                     break;
                 case FAIL:
                     scoreTV.setText("");
-                    ToastUtils.showLongToast("识别失败");
+                    ToastUtils.showLong("识别失败");
                     break;
                 case OPEN_MATCHING:
                     startM();

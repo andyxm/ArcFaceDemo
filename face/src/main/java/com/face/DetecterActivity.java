@@ -4,6 +4,7 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,7 +58,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
     private List<StudentModel> students = new ArrayList<>();
     private static final int DATA_ERROR=999;
     private static final int RIGIST_SUCCESS = 1000;
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -67,9 +68,8 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
                     uploadFace(model);
                     break;
                 case FAIL:
-                    // TODO: 2018/7/12 控制次数发现次数多的时候，就退出
                     scoreTV.setText("");
-                    ToastUtils.showLongToast("识别失败");
+                    showLongToast("识别失败");
                     countdown--;
                     if(countdown==0){
                         mHandler.removeCallbacks(mRunnable);
@@ -83,12 +83,17 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
                     showError();
                     break;
                 case RIGIST_SUCCESS:
-                    ToastUtils.showLongToast("注册成功");
+                    showLongToast("注册成功");
                     finish();
                     break;
             }
         }
     };
+    
+    private void showLongToast(String message) {
+        Log.e(TAG, message);
+    }
+    
     private int countdown=5;
     private void uploadFace(StudentModel model) {
         LogUtils.e("uploadFace", "model=" + model.getFaceCard() + ",length=" + model.getFaceFeature().getFeatureData().length);
@@ -108,13 +113,13 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
             if (split.length == 2) {
                 String newFacePath =dbPath + "/"+ split[0] + ".data";
                 if (FileUtils.isFileExists(newFacePath)){
-                    FileUtils.deleteFile(newFacePath);
+                    FileUtils.delete(newFacePath);
                     LogUtils.e(TAG,"文件存在,先删除");
                 }
                 boolean rename = FileUtils.rename(dotDataPath, split[0] + ".data");//重命名
                 LogUtils.e(TAG, "上传路径" + newFacePath+",重命名名称"+split[0] + ".data"+",rename="+rename);
                 if (rename){
-                    boolean deleteDir = FileUtils.deleteDir(FileUtil.IMAGE_REGIST_PATH);
+                    boolean deleteDir = FileUtils.deleteAllInDir(FileUtil.IMAGE_REGIST_PATH);
                     if (deleteDir){
                         LogUtils.e(TAG,"照片删除成功...");
                     }
@@ -160,7 +165,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
 
     }
     private void showError(){
-       ToastUtils.showShortToast("网络连接异常,请重新注册...");
+       showLongToast("网络连接异常,请重新注册...");
        finish();
    }
     @Override
@@ -176,7 +181,7 @@ public class DetecterActivity extends AppCompatActivity implements FaceCameraGLS
     private Runnable mRunnable=new Runnable() {
         @Override
         public void run() {
-            ToastUtils.showShortToast("注册超时,请重新注册");
+            showLongToast("注册超时,请重新注册");
             finish();
         }
     };

@@ -4,12 +4,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +33,6 @@ public class FaceFragmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_face_fragment);
         ButterKnife.bind(this);
         fragment = new FaceFragment();
-        ToastUtils.showLongToast("开启了fragment");
         Log.e(TAG, "开启了fragment");
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

@@ -36,11 +36,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation files('libs/facedetection.jar')
-    implementation files('libs/facerecognition.jar')
-    implementation files('libs/facetracking.jar')
-    implementation files('libs/ageestimation.jar')
-    implementation files('libs/genderestimation.jar')
+    api files('libs/facedetection.jar')
+    api files('libs/facerecognition.jar')
+    api files('libs/facetracking.jar')
+    api files('libs/ageestimation.jar')
+    api files('libs/genderestimation.jar')
     implementation 'com.guo.android_extend:android-extend:1.0.5'
     api 'com.blankj:utilcode:1.30.7'
 }

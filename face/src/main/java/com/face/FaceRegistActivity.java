@@ -6,9 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.FaceHelper;
 import com.MyApplication;
@@ -27,11 +29,10 @@ import com.arcsoft.facerecognition.AFR_FSDKEngine;
 import com.arcsoft.facerecognition.AFR_FSDKError;
 import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
-import com.blankj.utilcode.utils.ConvertUtils;
-import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.ThreadPoolUtils;
-import com.blankj.utilcode.utils.TimeUtils;
-import com.face.lib.FaceDataHelper;
+import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.ThreadUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.face.lib.listener.CameraListener;
 import com.face.lib.utils.CameraUtlis;
 import com.face.lib.utils.FileUtil;
@@ -216,7 +217,7 @@ public class FaceRegistActivity extends AppCompatActivity implements CameraUtlis
     private final static int MSG_EVENT_NO_FEATURE = 0x1003;
     private final static int MSG_EVENT_FD_ERROR = 0x1004;
     private final static int MSG_EVENT_FR_ERROR = 0x1005;
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_CODE) {
@@ -271,11 +272,10 @@ public class FaceRegistActivity extends AppCompatActivity implements CameraUtlis
             CameraUtlis.getInstance().doOpenCamera(FaceRegistActivity.this);
         }
     };
-    private ThreadPoolUtils threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.FixedThread, 2);
     @Override
     protected void onResume() {
         super.onResume();
-        threadPoolUtils.execute(runnable);
+        ThreadUtils.getSinglePool().execute(runnable);
     }
     @Override
     public void cameraHasOpened() {

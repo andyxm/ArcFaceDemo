@@ -2,15 +2,16 @@ package com.face;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.MyApplication;
-import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.ZipUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.ZipUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.request.GetRequest;
@@ -21,6 +22,7 @@ import com.lzy.okserver.download.DownloadTask;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -126,10 +128,10 @@ public class MActivity extends AppCompatActivity {
                 String unZipPath = path +"/"+FEATURE_ZIP;
                 deleteOldDataFile(path);
                 try {
-                    boolean isUnZipRusult = ZipUtils.unzipFile(unZipPath, path);
-                    if (isUnZipRusult) {
+                    List<File> isUnZipRusult = ZipUtils.unzipFile(unZipPath, path);
+                    if (!isUnZipRusult.isEmpty()) {
                         Log.e(TAG, "解压缩成功");
-                        FileUtils.deleteFile(unZipPath);
+                        FileUtils.delete(unZipPath);
 //                        application.mFaceHelperDB.LoadLocalDoNetFileData();
                     } else {
                         Log.e(TAG, "解压缩失败");
@@ -163,7 +165,7 @@ public class MActivity extends AppCompatActivity {
             return;
         }
         for (File file : files) {
-            FileUtils.deleteFile(file);
+            FileUtils.delete(file);
         }
     }
 }

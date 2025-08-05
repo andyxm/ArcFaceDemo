@@ -4,6 +4,7 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,9 @@ import butterknife.OnClick;
 import static com.face.lib.BaseFRAbsLoop.FAIL;
 import static com.face.lib.BaseFRAbsLoop.OPEN_MATCHING;
 import static com.face.lib.BaseFRAbsLoop.SUCCESS;
+
+import androidx.annotation.Nullable;
+
 @Deprecated
 /**
  * 测试Fragment,可忽略
@@ -44,18 +48,16 @@ public class FaceFragment extends Fragment implements FaceCameraGLSurfaceView.GL
     Button PairMatchingData;
     @BindView(R.id.close_face)
     Button closeFace;
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCCESS:
                     StudentModel model = (StudentModel) msg.obj;
-                    ToastUtils.showLongToast("识别成功");
                     score.setText("卡号:" + model.getFaceCard() + "分数:" + model.getScore());
                     break;
                 case FAIL:
                     score.setText("");
-                    ToastUtils.showLongToast("识别失败");
                     break;
                 case OPEN_MATCHING:
                     startM();

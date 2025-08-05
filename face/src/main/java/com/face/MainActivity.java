@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,6 +23,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.FaceDB;
 import com.MyApplication;
@@ -50,9 +51,9 @@ import com.arcsoft.genderestimation.ASGE_FSDKError;
 import com.arcsoft.genderestimation.ASGE_FSDKFace;
 import com.arcsoft.genderestimation.ASGE_FSDKGender;
 import com.arcsoft.genderestimation.ASGE_FSDKVersion;
-import com.blankj.utilcode.utils.FileUtils;
-import com.blankj.utilcode.utils.ThreadPoolUtils;
-import com.blankj.utilcode.utils.TimeUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.ThreadUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.face.lib.listener.CameraListener;
 import com.face.lib.utils.CameraUtlis;
 import com.face.lib.utils.FileUtil;
@@ -501,13 +502,12 @@ public class MainActivity extends AppCompatActivity implements CameraUtlis.CamOp
             CameraUtlis.getInstance().doOpenCamera(MainActivity.this);
         }
     };
-    private ThreadPoolUtils threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.FixedThread, 2);
 
     @Override
     protected void onResume() {
         super.onResume();
         if (!openM) {
-            threadPoolUtils.execute(runnable);
+            ThreadUtils.getSinglePool().execute(runnable);
         }
     }
 
